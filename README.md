@@ -112,3 +112,5 @@ LDA Test Accuracy: 0.9777777777777777
 
 
 ## Result
+Thus, the Linear Discriminant Analysis (LDA) classification model was successfully implemented using the Iris dataset, and an accuracy of 97.78% was achieved.
+
