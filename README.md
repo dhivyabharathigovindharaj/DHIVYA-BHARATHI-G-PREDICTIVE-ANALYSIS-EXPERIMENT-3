@@ -1,40 +1,22 @@
-# Experiment 3: Logistic Regression for Classification
+# EXPERIMENT NO : 3-LINEAR DISCRIMINANT ANALYSIS
 
-## Aim
 
-To compute descriptive statistics and probabilities using NumPy and
-Pandas.
+### Aim
 
-## Algorithm
+To implement Linear Discriminant Analysis (LDA) on the Iris dataset using Python to classify flower species, evaluate accuracy, and visualize the results.
 
-1.  **Start.**
+### Algorithm
 
-2.  Load the dataset and extract features `X` and target `y`.
-
-3.  Split the data into training and test sets (e.g., 80:20).
-
-4.  Standardize features using `StandardScaler`.
-
-5.  Train `LogisticRegression` on the training data.
-
-    The logistic (sigmoid) function is:
-
-    \[ `\sigma`{=tex}(z) = `\frac{1}{1 + e^{-z}}`{=tex} \]
-
-    where
-
-    \[ z = `\beta`{=tex}\_0 + `\beta`{=tex}\_1 x_1 + `\cdots `{=tex}+
-    `\beta`{=tex}\_p x_p \]
-
-6.  Predict labels on the test data.
-
-7.  Evaluate performance using accuracy, confusion matrix, and
-    classification report.
-
-8.  Print the evaluation metrics.
-
-9.  **Stop.**
-
+1. Import NumPy, Pandas, Matplotlib, and Scikit-learn libraries.
+2. Load the Iris dataset using load_iris().
+3. Separate input features (X) and target labels (Y).
+4. Split the dataset into 70% training and 30% testing data.
+5. Create an LDA model using LinearDiscriminantAnalysis().
+6. Train the model and transform the data into two discriminant components.
+7. Predict the flower species using the test data.
+8. Calculate model accuracy using accuracy_score().
+9. Visualize the three flower species using a scatter plot.
+10. Display the results and stop.
 
 
 
