@@ -39,7 +39,7 @@ Pandas.
 
 
 ## Program
-## Input 
+
 ```
 import numpy as np
 import pandas as pd
