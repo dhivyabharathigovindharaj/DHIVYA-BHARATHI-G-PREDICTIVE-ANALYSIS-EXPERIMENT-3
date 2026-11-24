@@ -1,98 +1,101 @@
-# EXPERIMENT NO 3 :LINEAR DISCRIMINANT ANALYSIS
+# PATP-Experiment 3: Logistic Regression for Classification
+
+## Aim 
+To develop a Logistic Regression classification model using Python and machine learning libraries to predict categorical outcomes based on input features and evaluate the model's performance using accuracy, confusion matrix, and classification report.
 
 
-### Aim
-
-To implement Linear Discriminant Analysis (LDA) on the Iris dataset using Python to classify flower species, evaluate accuracy, and visualize the results.
-
-### Algorithm
-
-1. Import NumPy, Pandas, Matplotlib, and Scikit-learn libraries.
-2. Load the Iris dataset using load_iris().
-3. Separate input features (X) and target labels (Y).
-4. Split the dataset into 70% training and 30% testing data.
-5. Create an LDA model using LinearDiscriminantAnalysis().
-6. Train the model and transform the data into two discriminant components.
-7. Predict the flower species using the test data.
-8. Calculate model accuracy using accuracy_score().
-9. Visualize the three flower species using a scatter plot.
-10. Display the results and stop.
+## Algorithm
+1. Start.
+2. Import the required Python libraries.
+3. Load the dataset and separate the independent variables (X) and dependent variable (y).
+4. Split the dataset into training and testing sets using an 80:20 ratio.
+5. Standardize the input features using StandardScaler.
+6. Train the Logistic Regression model using the training dataset.
+7. Predict the target values using the test dataset.
+8. Evaluate the model using accuracy score, confusion matrix, and classification report.
+9. Display the evaluation results.
+10. Stop.
 
 
-
-## Program
-
+## Input
 ```
+# Step 1: Import required libraries
 import numpy as np
 import pandas as pd
-import matplotlib.pyplot as plt
 
-from sklearn.datasets import load_iris
-from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
+from sklearn.datasets import load_breast_cancer
 from sklearn.model_selection import train_test_split
-from sklearn.metrics import accuracy_score
-
-# Load Iris dataset
-iris = load_iris()
-X = iris.data
-Y = iris.target
-names = iris.target_names
-
-# Split data into train and test sets
-X_train, X_test, Y_train, Y_test = train_test_split(
-    X, Y,
-    test_size=0.3,
-    random_state=42,
-    stratify=Y
+from sklearn.preprocessing import StandardScaler
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import (
+    accuracy_score,
+    confusion_matrix,
+    classification_report
 )
 
-# Fit LDA
-lda = LinearDiscriminantAnalysis(n_components=2)
+# Load the dataset using scikit-learn's loader directly to access .data and .feature_names
+data = load_breast_cancer()
 
-X_train_lda = lda.fit_transform(X_train, Y_train)
-X_test_lda = lda.transform(X_test)
+X = pd.DataFrame(data.data, columns=data.feature_names)
+y = pd.Series(data.target)
 
-# Predict on test data
-Y_pred = lda.predict(X_test)
+# Split the dataset into training and testing sets
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.2, random_state=42
+)
 
-# Evaluate accuracy
-acc=accuracy_score(Y_test, Y_pred)
-print("LDA Test Accuracy:", acc)
+# Standardize the features
+scaler = StandardScaler()
 
-# LDA projection for visualization
-X_lda = lda.fit_transform(X, Y)
+X_train = scaler.fit_transform(X_train)
+X_test = scaler.transform(X_test)
 
-# Plot
-plt.figure(figsize=(10, 5))
+# Create and train Logistic Regression model
+model = LogisticRegression(max_iter=10000)
+model.fit(X_train, y_train)
 
-for label, marker, color in zip(
-    [0, 1, 2],
-    ('o', '^', 's'),
-    ('red', 'green', 'blue')):
+# Predict test data
+y_pred = model.predict(X_test)
 
-  plt.scatter(
-      X_lda[Y == label, 0],
-      X_lda[Y == label, 1],
-      marker=marker,
-      color=color,
-      label=names[label]
-  )
+# Calculate accuracy
+accuracy = accuracy_score(y_test, y_pred)
 
-plt.xlabel('LDA 1')
-plt.ylabel('LDA 2')
-plt.title('LDA Projection (Iris Dataset)')
-plt.legend()
-plt.grid(True)
-plt.show()
+# Display confusion matrix
+cm = confusion_matrix(y_test, y_pred)
+
+# Display classification report
+report = classification_report(
+    y_test,
+    y_pred,
+    target_names=data.target_names
+)
+
+print("\nAccuracy:", accuracy)
+print("\nConfusion Matrix:")
+print(cm)
+
+print("\nClassification Report:")
+print(report)
 ```
-## Output 
-```
-LDA Test Accuracy: 0.9777777777777777
+## Output
 ```
 
-<img width="844" height="470" alt="image" src="https://github.com/user-attachments/assets/a438213c-585a-402d-a280-35479a807b37" />
+Accuracy: 0.9736842105263158
 
+Confusion Matrix:
+[[41  2]
+ [ 1 70]]
+
+Classification Report:
+              precision    recall  f1-score   support
+
+   malignant       0.98      0.95      0.96        43
+      benign       0.97      0.99      0.98        71
+
+    accuracy                           0.97       114
+   macro avg       0.97      0.97      0.97       114
+weighted avg       0.97      0.97      0.97       114
+```
 
 ## Result
-Thus, the Linear Discriminant Analysis (LDA) classification model was successfully implemented using the Iris dataset, and an accuracy of 97.78% was achieved.
-
+Thus, Linear Discriminant Analysis was successfully implemented on the Iris dataset. The classification accuracy was calculated, and the three flower species were visualized using two linear discriminant components (LD1 and LD2).
